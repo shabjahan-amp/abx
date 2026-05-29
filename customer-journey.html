@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ABX Customer Journey — Amplitude</title>
+<title>ABX Customer Journey — Sweep View</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.35.0/tabler-icons-outline.min.css">
 <style>
 :root {
@@ -19,6 +19,7 @@
   --border-radius-lg: 12px;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --abx-bg: #EEEDFE;
+  --abx-bg-mid: #CECBF6;
   --abx-text: #26215C;
   --abx-text-strong: #3C3489;
   --abx-accent: #534AB7;
@@ -34,6 +35,7 @@
     --color-border-tertiary: rgba(255, 255, 255, 0.08);
     --color-border-secondary: rgba(255, 255, 255, 0.15);
     --abx-bg: #26215C;
+    --abx-bg-mid: #3C3489;
     --abx-text: #CECBF6;
     --abx-text-strong: #EEEDFE;
     --abx-accent: #AFA9EC;
@@ -46,435 +48,317 @@ html, body {
   background: var(--color-background-primary);
   color: var(--color-text-primary);
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 .container {
-  max-width: 920px;
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 2.5rem 1.5rem 3rem;
+  padding: 2rem 1.5rem 2.5rem;
 }
 .page-header {
-  margin: 0 0 2rem;
+  margin: 0 0 1.5rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 .page-header h1 {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 500;
-  margin: 0 0 6px;
+  margin: 0 0 4px;
   color: var(--color-text-primary);
 }
 .page-header p {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text-secondary);
   margin: 0;
-  line-height: 1.6;
-}
-.j-rail {
-  display: flex;
-  gap: 6px;
-  margin: 0 0 1.5rem;
-  flex-wrap: wrap;
-}
-.j-pill {
-  flex: 1;
-  min-width: 88px;
-  padding: 10px 8px;
-  border: 0.5px solid var(--color-border-tertiary);
-  border-radius: var(--border-radius-md);
-  background: transparent;
-  cursor: pointer;
-  font-size: 11px;
-  color: var(--color-text-secondary);
-  text-align: center;
-  line-height: 1.3;
-  transition: background .15s, border-color .15s, color .15s;
-  font-family: inherit;
-}
-.j-pill:hover {
-  background: var(--color-background-secondary);
-}
-.j-pill.active {
-  border-color: var(--color-border-secondary);
-  background: var(--color-background-secondary);
-  color: var(--color-text-primary);
-  font-weight: 500;
-}
-.j-pill .stg {
-  display: block;
-  font-size: 10px;
-  color: var(--color-text-tertiary);
-  margin-bottom: 2px;
-  font-weight: 400;
-}
-.j-pill.active .stg {
-  color: var(--color-text-secondary);
-}
-.j-stage {
-  font-size: 11px;
-  color: var(--color-text-tertiary);
-  letter-spacing: .05em;
-  text-transform: uppercase;
-  margin: 0 0 4px;
-}
-.j-title {
-  font-size: 20px;
-  font-weight: 500;
-  color: var(--color-text-primary);
-  margin: 0 0 4px;
-}
-.j-sub {
-  font-size: 14px;
-  color: var(--color-text-secondary);
-  margin: 0 0 16px;
   line-height: 1.55;
+  max-width: 760px;
 }
-.j-play {
-  background: var(--abx-bg);
-  border-radius: var(--border-radius-md);
-  padding: 14px 16px;
-  margin: 0 0 8px;
-}
-.j-play h4 {
-  margin: 0 0 8px;
-  font-size: 11px;
-  color: var(--abx-text-strong);
-  font-weight: 500;
-  letter-spacing: .05em;
-  text-transform: uppercase;
+.legend {
   display: flex;
   align-items: center;
   gap: 6px;
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
 }
-.j-play h4 i {
-  font-size: 14px;
-}
-.j-play-lede {
+.legend i {
+  color: var(--abx-accent);
   font-size: 13px;
-  color: var(--abx-text);
-  line-height: 1.55;
+}
+
+.phase-band {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 6px;
   margin: 0 0 12px;
 }
-.j-steps {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-.j-step {
-  flex: 1;
-  min-width: 130px;
-  background: rgba(255, 255, 255, 0.55);
+.phase {
+  padding: 6px 10px;
   border-radius: var(--border-radius-md);
-  padding: 8px 10px;
-}
-@media (prefers-color-scheme: dark) {
-  .j-step { background: rgba(0, 0, 0, 0.25); }
-}
-.j-step .n {
+  background: var(--color-background-secondary);
   font-size: 10px;
-  color: var(--abx-accent);
   font-weight: 500;
-  letter-spacing: .04em;
   text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--color-text-secondary);
+  text-align: center;
 }
-.j-step .t {
-  font-size: 11.5px;
-  color: var(--abx-text);
-  line-height: 1.4;
-  margin-top: 2px;
-}
-.j-legend {
-  font-size: 11px;
-  color: var(--color-text-tertiary);
-  margin: 12px 0 14px;
-  padding: 0 4px;
-}
-.j-grid {
+
+.sweep {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 6px;
 }
-.j-card {
+.stage {
+  display: flex;
+  flex-direction: column;
   background: var(--color-background-secondary);
   border-radius: var(--border-radius-md);
-  padding: 12px 14px;
+  padding: 10px 10px 8px;
+  min-height: 320px;
 }
-.j-card h4 {
+.stage-head {
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+.stage-num {
+  font-size: 9px;
+  color: var(--color-text-tertiary);
+  font-weight: 500;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  margin: 0 0 2px;
+}
+.stage-name {
   font-size: 12px;
   font-weight: 500;
-  margin: 0 0 6px;
-  color: var(--color-text-secondary);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.j-card h4 i {
-  font-size: 14px;
-  color: var(--color-text-tertiary);
-}
-.j-action {
-  font-size: 12.5px;
   color: var(--color-text-primary);
-  line-height: 1.55;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.play-line {
+  background: var(--abx-bg);
+  border-radius: 4px;
+  padding: 6px 7px;
   margin: 0 0 8px;
 }
-.j-abx {
+.play-line .label {
+  font-size: 8px;
+  font-weight: 500;
+  color: var(--abx-text-strong);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin: 0 0 3px;
+}
+.play-line .label i {
+  font-size: 9px;
+}
+.play-line .text {
+  font-size: 10.5px;
+  color: var(--abx-text);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.teams {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: 1;
+}
+.team {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  color: var(--color-text-primary);
+  line-height: 1.3;
+  padding: 3px 4px;
+  border-radius: 4px;
+}
+.team.owned {
+  background: var(--abx-bg);
+  color: var(--abx-text);
+  font-weight: 500;
+}
+.team i {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}
+.team.owned i {
+  color: var(--abx-accent);
+}
+.team .name {
+  flex: 1;
+  min-width: 0;
+}
+
+.footer-note {
+  margin: 1.5rem 0 0;
+  padding: 12px 14px;
+  background: var(--abx-bg);
+  border-radius: var(--border-radius-md);
+  font-size: 12.5px;
+  color: var(--abx-text);
+  line-height: 1.55;
   display: flex;
   align-items: flex-start;
-  gap: 6px;
-  padding: 6px 8px;
-  background: var(--abx-bg);
-  border-radius: 6px;
-  font-size: 11.5px;
-  color: var(--abx-text);
-  line-height: 1.45;
+  gap: 8px;
 }
-.j-abx i {
-  font-size: 12px;
+.footer-note i {
   color: var(--abx-accent);
+  font-size: 14px;
   margin-top: 2px;
   flex-shrink: 0;
 }
-.j-abx strong {
+.footer-note strong {
   font-weight: 500;
   color: var(--abx-text-strong);
 }
-.j-nav {
-  display: flex;
-  justify-content: space-between;
-  margin: 1.25rem 0 0;
-  gap: 8px;
+
+@media (max-width: 1400px) {
+  .stage { min-height: 340px; }
+  .stage-name { font-size: 11px; }
+  .team { font-size: 10px; }
+  .play-line .text { font-size: 10px; }
 }
-.j-nav button {
-  flex: 1;
-  padding: 10px 14px;
-  background: transparent;
-  border: 0.5px solid var(--color-border-secondary);
-  border-radius: var(--border-radius-md);
-  color: var(--color-text-primary);
-  font-family: inherit;
-  font-size: 13px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: background .15s, opacity .15s;
+
+@media (max-width: 1100px) {
+  .sweep { grid-template-columns: repeat(6, 1fr); }
+  .phase-band { grid-template-columns: repeat(2, 1fr); }
+  .stage { min-height: 0; }
 }
-.j-nav button:hover:not(:disabled) {
-  background: var(--color-background-secondary);
+
+@media (max-width: 700px) {
+  .sweep { grid-template-columns: repeat(2, 1fr); }
+  .phase-band { grid-template-columns: 1fr; }
 }
-.j-nav button:active:not(:disabled) {
-  transform: scale(0.98);
-}
-.j-nav button:disabled {
-  opacity: .4;
-  cursor: not-allowed;
-}
-.j-nav button i {
-  font-size: 14px;
-}
-@media (max-width: 600px) {
-  .container { padding: 1.5rem 1rem 2rem; }
-  .page-header h1 { font-size: 22px; }
-  .j-pill { min-width: 72px; font-size: 10px; }
-  .j-step { min-width: 110px; }
-  .j-grid { grid-template-columns: 1fr; }
+
+@media print {
+  body { background: white; color: black; }
+  .container { max-width: none; padding: 0.5in; }
+  .sweep { grid-template-columns: repeat(12, 1fr); gap: 4px; }
+  .stage { min-height: 280px; break-inside: avoid; }
+  @page { size: landscape; margin: 0.4in; }
 }
 </style>
 </head>
 <body>
 <div class="container">
   <div class="page-header">
-    <h1>ABX customer journey</h1>
-    <p>How ABX orchestrates the full customer experience across 118 named parent accounts — from awareness through expansion.</p>
+    <div>
+      <h1>ABX customer journey — sweep view</h1>
+      <p>How ABX orchestrates the full customer experience across 118 named parent accounts. Every stage, every team, every play.</p>
+    </div>
+    <div class="legend">
+      <i class="ti ti-flag"></i><span>Purple = 100% ABX-owned motion</span>
+    </div>
   </div>
-  <div class="j-rail" id="j-rail"></div>
-  <p class="j-stage" id="j-stage"></p>
-  <h3 class="j-title" id="j-title"></h3>
-  <p class="j-sub" id="j-sub"></p>
-  <div class="j-play" id="j-play"></div>
-  <p class="j-legend">Purple = ABX coordination inside each team's action</p>
-  <div class="j-grid" id="j-grid"></div>
-  <div class="j-nav">
-    <button id="j-prev" type="button"><i class="ti ti-arrow-left"></i> Previous</button>
-    <button id="j-next" type="button">Next <i class="ti ti-arrow-right"></i></button>
+
+  <div class="phase-band">
+    <div class="phase" style="grid-column: span 8">Pre-sale awareness</div>
+    <div class="phase" style="grid-column: span 4">Post-sale lifecycle</div>
+  </div>
+
+  <div class="sweep" id="sweep"></div>
+
+  <div class="footer-note">
+    <i class="ti ti-flag"></i>
+    <div><strong>ABX is the connective tissue across every stage.</strong> We design the play, brief every team, own the moments others can't (Wildcard, Connex/Ortus, ReachDesk, personalized landing pages, 1:1 motions, lifecycle exec sequences, advocate events, reactivation), and coordinate the cross-functional motion that turns 12 disconnected teams into one customer experience.</div>
   </div>
 </div>
+
 <script>
 const stages = [
-  {key:"Awareness + MQL",stage:"Pre-S0",title:"Awareness + MQL — get on their radar, capture first signals",sub:"118 named parent accounts. No tiers — every account gets the play. Goal: align the account team, surface Amplitude to the buying committee, and route the first hand-raise within 24 hours.",
-    play:{lede:"Coordinated awareness build across 118 accounts (personas, account plans, SDR mapping, Wildcard, ads) — then when signal hits, ABX routes to the right channel within 24 hours.",
-      steps:[{n:"Step 1",t:"Personas + buying group defined"},{n:"Step 2",t:"Account plans + SDR mapping"},{n:"Step 3",t:"Wildcard to champions/EBs"},{n:"Step 4",t:"On signal: AE alerted, ads + sequence fire"}]},
-    cards:[
-      {h:"Sales (AE)",i:"ti-user-check",action:"Build account plan per account, confirm use case hypothesis, shape buying committee",abx:"Defined personas across the 118 accounts"},
-      {h:"SDR",i:"ti-search",action:"Alumni & connection mapping, identify champions / EBs / surrounding buyers, multi-thread, MQL follow-up SLA",abx:"Built the persona map SDRs map against, set priority contacts, triggered sequences on signal"},
-      {h:"Growth & digital",i:"ti-device-desktop",action:"LinkedIn awareness ads to ICP, 6sense intent, display ads to ABX accounts, retarget engaged contacts, persona-specific creative",abx:"Selected accounts to activate, tied signal to persona, activated the right ad cluster"},
-      {h:"Events (field, partner, corporate)",i:"ti-calendar-event",action:"Industry conferences (Cannes, RSA, Money 20/20), partner-hosted dinners, Amplitude-hosted events",abx:"Mapped event targets to account list, briefed AEs pre-event"},
-      {h:"Community",i:"ti-users-group",action:"Amplifier nominations from peers, surface relevant Amplitude newsletter content",abx:"Identified champion candidates inside accounts for Amplifier intro"},
-      {h:"Campaigns & PMM",i:"ti-speakerphone",action:"Category narrative content, analyst report co-marketing, thought-leadership webinars",abx:"Mapped content themes to persona pain points across account list"},
-      {h:"Lifecycle marketing",i:"ti-mail-fast",action:"Trigger nurture sequence on MQL, Drift / chatbot routing, in-app + email cadence",abx:"Sequenced the nurture flow against the account's persona mix"},
-      {h:"Wildcard (ABX-owned)",i:"ti-gift",action:"Personalized gifts to champions and EBs",abx:"100% ABX-owned — concept, recipient list, message, fulfillment"},
-      {h:"Connex / Ortus dinners (ABX-owned)",i:"ti-tools-kitchen-2",action:"3rd-party-hosted exec dinners",abx:"100% ABX-owned — guest curation, brief, follow-up"},
-      {h:"Personalized landing pages (ABX-owned)",i:"ti-browser",action:"Account-specific landing pages with persona-relevant content",abx:"100% ABX-owned — design, content, persona targeting"},
-      {h:"Personalized content (ABX-owned)",i:"ti-file-text",action:"Account- and persona-specific content offers",abx:"100% ABX-owned — concept, copy, asset production"}
-    ]},
-  {key:"S0",stage:"S0 · Engagement",title:"S0 — engagement, AE accepts the lead",sub:"Prospect meets ICP and has engaged in understanding how Amplitude can solve their pain. Discovery meeting scheduled.",
-    play:{lede:"Personalized landing page gets refreshed with discovery insights, exec-led email sequence fires, local field dinner queued up, EBC conversation teed up for S4.",
-      steps:[{n:"Step 1",t:"Discovery meeting held"},{n:"Step 2",t:"Landing page refreshed from AE/SE inputs"},{n:"Step 3",t:"Exec email sequence fires"},{n:"Step 4",t:"Tee up EBC for S4"}]},
-    cards:[
-      {h:"Sales (AE)",i:"ti-user-check",action:"Discovery call, ICP qualification, pain framing",abx:"Took AE's discovery output and updated the personalized landing page"},
-      {h:"SDR",i:"ti-users",action:"Multi-thread economic buyer, identify secondary contacts, book champion into next call",abx:"Took SDR-identified secondary contacts and included them in digital ad campaigns"},
-      {h:"SE",i:"ti-tools",action:"Pre-call platform tailoring, solution hypothesis",abx:"Took SE solution info and updated the personalized landing page"},
-      {h:"Lifecycle / in-app (ABX-owned)",i:"ti-message",action:"Personalized email from Exec, Outreach sequence with custom landing page",abx:"100% ABX-owned — wrote the exec email, built the landing page, sequenced cadence"},
-      {h:"Events (field, partner, corporate)",i:"ti-calendar-event",action:"Local field dinner and/or partner-co-hosted event near HQ",abx:"Curated invite list, briefed AE on event-to-deal connection"}
-    ]},
-  {key:"S1",stage:"S1 · Discovery",title:"S1 — discovery, FLM validated",sub:"Discovery completed, champion confirmed we can solve their pain and agreed to progress. Pain validated with metric impact. 3 whys captured.",
-    play:{lede:"Pressure-test the champion — connect them to a peer Amplifier, surface analyst content, activate persona ads on the broader buying committee.",
-      steps:[{n:"Step 1",t:"MEDDPICC + champion enablement"},{n:"Step 2",t:"Peer Amplifier intro"},{n:"Step 3",t:"Persona ads on buying committee"},{n:"Step 4",t:"Mutual action plan draft"}]},
-    cards:[
-      {h:"Sales (AE + SE)",i:"ti-user-check",action:"Validated pain with metric impact, confirmed champion + initial EB, 3 whys",abx:"Sourced champion enablement materials, supplied competitor positioning"},
-      {h:"Growth & digital",i:"ti-device-desktop",action:"Persona-specific ad creative, retarget broader buying committee",abx:"Expanded contact list to surface buying committee for ads"},
-      {h:"Community",i:"ti-users-group",action:"Connect champion with Amplifier peer, Slack community intro",abx:"Matched the right peer, brokered the connection, prepped both sides"},
-      {h:"Events (field, partner, corporate)",i:"ti-calendar-event",action:"Industry-vertical roundtable, executive summit consideration",abx:"Identified the right exec for invite, mapped event to deal timing"}
-    ]},
-  {key:"S2",stage:"S2 · Qualification",title:"S2 — qualification, MEDDPICC validated",sub:"Opportunity qualified with EB or champion. 3 whys, known budget, decision timeline & next steps agreed. FLM validated.",
-    play:{lede:"Big-bet surround motion — Value Consultants build the value POV, leave-behind 1-pager and exec video go out, ReachDesk gift to champion, lunch & learn planning kicks off for the S3 event, competitive ads, peer reference call.",
-      steps:[{n:"Step 1",t:"VC value POV + leave-behind 1-pager + exec video"},{n:"Step 2",t:"ReachDesk gift + lunch & learn planning"},{n:"Step 3",t:"Competitive ads + peer reference"},{n:"Step 4",t:"Bespoke dinner near HQ"}]},
-    cards:[
-      {h:"Sales (AE + SE)",i:"ti-user-check",action:"Tailored demo to use case, business case co-built, paper process documented",abx:"Created leave-behind 1-pager for champion, sourced peer reference"},
-      {h:"Value Consultants",i:"ti-chart-arcs",action:"Build value messaging, develop strong POV for demos, EBCs, pitches",abx:"Took VC value messaging and updated landing pages, 1-pagers, and exec content"},
-      {h:"Growth & digital",i:"ti-device-desktop",action:"Competitive displacement ads, persona-specific creative for buying committee",abx:"Identified buying committee, defined creative angle by persona"},
-      {h:"Lifecycle / in-app (ABX-owned)",i:"ti-message",action:"Exec-to-exec email sequence, personalized exec video",abx:"100% ABX-owned — wrote the exec email, sourced the video, sequenced cadence"},
-      {h:"Events (field, partner, corporate)",i:"ti-building",action:"Bespoke dinner near their HQ, partner-co-hosted CXO roundtable",abx:"Built guest list, briefed exec sponsor, tied event to deal moment"},
-      {h:"Community",i:"ti-users-group",action:"Reference call from named peer, Amplifier intro at event",abx:"Matched the peer, brokered the intro, prepped both sides"},
-      {h:"1:1 motion planning (ABX-owned)",i:"ti-presentation",action:"Plan the lunch & learn at their office OR virtual demo (event happens at S3)",abx:"100% ABX-owned — concept, agenda, exec coordination, logistics"},
-      {h:"ReachDesk gifting (ABX-owned)",i:"ti-gift",action:"Personalized gift to champion at S2",abx:"100% ABX-owned — message, gift selection, send timing"}
-    ]},
-  {key:"S3",stage:"S3 · Business & Technical Eval",title:"S3 — business & technical evaluation",sub:"Gain commitment to business and technical evaluation criteria & plan with champion & EB.",
-    play:{lede:"Lunch & learn lands at their office (or virtual demo) — Value Consultants drive strong POV for technical deep-dive and eval criteria, peer references queued, EBC invite sent for S4.",
-      steps:[{n:"Step 1",t:"Lunch & learn at their office"},{n:"Step 2",t:"VC-led value engineering session"},{n:"Step 3",t:"Technical deep-dive + eval criteria"},{n:"Step 4",t:"EBC invite sent for S4"}]},
-    cards:[
-      {h:"Sales (AE + SE)",i:"ti-user-check",action:"Demo completed, technical use cases + success metrics defined, evaluation criteria agreed",abx:"Updated landing page content and 1-pagers with eval-stage messaging"},
-      {h:"Value Consultants",i:"ti-chart-arcs",action:"Strong POV for lunch & learn, eval criteria, technical deep-dive",abx:"Took VC POV and updated landing pages and leave-behind 1-pagers"},
-      {h:"Community",i:"ti-users-group",action:"Peer reference from same industry, customer advisory board mention",abx:"Identified the highest-trust peer reference, brokered the intro"},
-      {h:"Events (field, partner, corporate)",i:"ti-calendar-event",action:"Industry-vertical roundtable, EBC save-the-date for S4",abx:"Sequenced invite to land at the right deal moment"},
-      {h:"1:1 motion (ABX-owned)",i:"ti-presentation",action:"Lunch & learn at their office OR virtual demo — the event happens",abx:"100% ABX-owned — production, agenda, exec coordination, follow-up"}
-    ]},
-  {key:"S4",stage:"S4 · Proof of Value",title:"S4 — proof of value, EBC moment",sub:"Prove value of Amplitude through evaluation & gain technical win from buying team. EBC at SF HQ is the centerpiece moment. Path to production documented.",
-    play:{lede:"EBC at SF HQ — Value Consultants drive strong POV across exec lineup and value engineering, customer references on stage, technical deep-dive. Lock the technical win, EB commits to updated mutual action plan.",
-      steps:[{n:"Step 1",t:"EBC invite sent + agenda built"},{n:"Step 2",t:"EBC at SF HQ"},{n:"Step 3",t:"VC value map + business case validated"},{n:"Step 4",t:"EB commits to MAP"}]},
-    cards:[
-      {h:"Sales (AE + SE)",i:"ti-user-check",action:"Value map & business case validated, eval plan complete, technical win confirmed",abx:"Updated leave-behind content for EB review, refreshed landing page"},
-      {h:"Value Consultants",i:"ti-chart-arcs",action:"Strong POV for EBC, value map, business case",abx:"Took VC value map and updated EBC content, leave-behinds, exec materials"},
-      {h:"Exec team",i:"ti-crown",action:"CEO/CRO/CMO meeting at EBC, board-to-board reference if applicable",abx:"Brokered the exec meeting, prepped both sides, sourced board references"},
-      {h:"Growth & digital",i:"ti-device-desktop",action:"Persona-specific creative for procurement, legal, security",abx:"Expanded ad targeting to late-stage stakeholders"},
-      {h:"Community",i:"ti-users-group",action:"Peer reference from same industry on EBC agenda, customer reference call to EB",abx:"Identified the highest-trust peer reference, brokered the intro"},
-      {h:"Events (field, partner, corporate)",i:"ti-building",action:"EBC at SF HQ — owned by Corporate Events in partnership with Sales",abx:"ABX coordinates: invite list, exec brief, attendee experience, follow-up"}
-    ]},
-  {key:"S5",stage:"S5 · Proposal",title:"S5 — proposal, vendor of choice",sub:"Agree commercial terms and deal structure. Empower champion and EB to secure internal approvals.",
-    play:{lede:"Champion and EB review proposal — Value Consultants articulate ROI and value, vendor of choice confirmed, security review complete, services SOW done, draft implementation plan ready.",
-      steps:[{n:"Step 1",t:"Proposal reviewed w/ champion + EB"},{n:"Step 2",t:"VC ROI articulation + vendor of choice"},{n:"Step 3",t:"Security + legal complete"},{n:"Step 4",t:"Implementation plan drafted"}]},
-    cards:[
-      {h:"Sales (AE + SE)",i:"ti-user-check",action:"Proposal reviewed, vendor of choice, security/legal/services SOW",abx:"Final landing page refresh, leave-behind for internal selling"},
-      {h:"Value Consultants",i:"ti-chart-arcs",action:"Value messaging for proposal, ROI articulation",abx:"Took VC proposal value points and updated final content"},
-      {h:"Exec team",i:"ti-crown",action:"Exec-to-exec air cover for final approvals if strategic",abx:"Coordinated exec touch points, supplied talking points"},
-      {h:"Community",i:"ti-users-group",action:"Final peer reference if needed for board approval",abx:"Sourced board-level peer reference"}
-    ]},
-  {key:"S6",stage:"S6 · Negotiation",title:"S6 — negotiation, conclude and sign",sub:"Conclude & sign agreement. Plan set for implementation. Agreement terms finalized, MSA signed.",
-    play:{lede:"Sign moment — agreement terms finalized, MSA signed, internal teams aligned on services and kickoff plan.",
-      steps:[{n:"Step 1",t:"Agreement terms finalized"},{n:"Step 2",t:"MSA signed (if required)"},{n:"Step 3",t:"Implementation plan finalized"},{n:"Step 4",t:"Internal teams aligned"}]},
-    cards:[
-      {h:"Sales (AE + SE)",i:"ti-user-check",action:"Agreement terms finalized, MSA signed, implementation plan finalized",abx:"Standby with content updates as scope finalizes"},
-      {h:"Exec team",i:"ti-crown",action:"Final exec-to-exec close if strategic",abx:"Coordinated exec touch points"}
-    ]},
-  {key:"S7",stage:"S7 · Closed Won",title:"S7 — closed won, clean handoff",sub:"Launch the customer relationship with a clean, proactive handoff. Ensure implementation kickoff scheduled. CSM introduction to customer.",
-    play:{lede:"Welcome moment + clean CS handoff — direct mail gift to champion, AE/SE hand off use cases and value map to CS, kickoff meeting on calendar.",
-      steps:[{n:"Step 1",t:"Closed Won in Salesforce"},{n:"Step 2",t:"Direct mail gift to champion"},{n:"Step 3",t:"CSM intro to customer"},{n:"Step 4",t:"Kickoff meeting scheduled"}]},
-    cards:[
-      {h:"Sales (AE + SE)",i:"ti-user-check",action:"Hand off use cases, KPIs and value map to CS for success plan",abx:"Helped with content development for handoff materials"},
-      {h:"CSM",i:"ti-headset",action:"CSM intro to customer, draft success plan, kickoff meeting scheduled",abx:"Helped with content development for kickoff and success plan"},
-      {h:"SE",i:"ti-tools",action:"Implementation support, custom event tracking setup",abx:"Surfaced persona use cases not yet covered in scope"},
-      {h:"Community",i:"ti-users-group",action:"Amplifier nomination, Slack community onboarding, user group invite",abx:"Nominated the champion, set up Amplifier path"},
-      {h:"Lifecycle / in-app",i:"ti-message",action:"In-app onboarding sequence, power user nurture",abx:"Defined onboarding messaging by persona"},
-      {h:"Direct mail gift (ABX-owned)",i:"ti-gift",action:"Direct mail gift to champion and EB",abx:"100% ABX-owned — gift selection, message, timing"}
-    ]},
-  {key:"Adopt",stage:"Post-sale · Adopt",title:"Adoption — drive sticky usage",sub:"They're live. Are they actually using it? Health signals matter more than ARR right now. Watch the Risk Tier field.",
-    play:{lede:"QBR prep + in-person exec check-in + champion appreciation — and if Risk Tier dips, activate the reactivation play within 7 days.",
-      steps:[{n:"Step 1",t:"QBR prep + exec check-in"},{n:"Step 2",t:"Champion appreciation"},{n:"Step 3",t:"Risk Tier dip → activate"},{n:"Step 4",t:"User group + Amplifier"}]},
-    cards:[
-      {h:"CSM",i:"ti-headset",action:"Health monitoring (Risk Tier), adoption playbook, power user identification",abx:"Helped with content development for QBR materials and exec touch points"},
-      {h:"Customer education",i:"ti-school",action:"Office hours, persona-specific learning paths, certification badges",abx:"Sequenced education campaign to persona adoption gaps"},
-      {h:"Lifecycle / in-app",i:"ti-message",action:"Feature adoption nudges, usage-based personalization",abx:"Defined the nudge logic by persona and risk tier"},
-      {h:"Community",i:"ti-users-group",action:"User group invite, Amplifier program nomination, peer learning intro",abx:"Identified champions ready for community elevation"},
-      {h:"Reactivation play (ABX-owned)",i:"ti-refresh",action:"When Risk Tier dips: exec outreach, EBC refresh, peer connect within 7 days",abx:"100% ABX-owned — trigger logic, orchestrated response, follow-through"}
-    ]},
-  {key:"Advocate",stage:"Post-sale · Advocate",title:"Advocate — turn customers into the story",sub:"They're a fan. Convert that into pipeline-generating advocacy — internal references for AEs and external references for the market.",
-    play:{lede:"ABX-only advocate appreciation event → speaker slot at exec summit November → joint case study production → customer logos in display ads → newsletter feature.",
-      steps:[{n:"Step 1",t:"ABX-only advocate event"},{n:"Step 2",t:"Speaker at exec summit"},{n:"Step 3",t:"Joint case study + video"},{n:"Step 4",t:"Logo in ads + landing pages"}]},
-    cards:[
-      {h:"Community",i:"ti-users-group",action:"Amplifier program enrollment, speaker at exec summit November, customer advisory board seat",abx:"Identified advocate candidates, coordinated speaker prep"},
-      {h:"Events (field, partner, corporate)",i:"ti-microphone",action:"Speaker at Amplitude summit (owned by Corporate Events in partnership with Sales), industry conference co-presence, customer dinner host",abx:"ABX coordinates: advocate identification, exec prep, follow-up"},
-      {h:"Growth & digital",i:"ti-device-desktop",action:"Customer logo in display ads, quote in landing pages, video testimonial campaign",abx:"Sourced the quotes, brokered the logo permissions"},
-      {h:"Campaigns & PMM",i:"ti-speakerphone",action:"Customer-led webinar, earnings call quotable, analyst briefing reference",abx:"Identified the highest-leverage moments to deploy advocates"},
-      {h:"Lifecycle / in-app",i:"ti-message",action:"Internal reference email to AEs, customer story in newsletter",abx:"Curated which advocates AEs can request and for what use cases"},
-      {h:"Advocate event (ABX-owned)",i:"ti-star",action:"ABX-only quarterly appreciation event for top advocates",abx:"100% ABX-owned — invite list, agenda, experience, follow-up"}
-    ]},
-  {key:"Expand",stage:"Post-sale · Expand",title:"Expand — multi-thread the org",sub:"Original buyer is happy and now an advocate. Now we systematically expand into adjacent teams, BUs, geographies, and use cases. Same ABX playbook as net-new, on a trusted foundation.",
-    play:{lede:"Adjacent BU mapping → persona ads to new teams → champion-led intro events → in-product expand signals trigger 1:1 plays → customer-specific EBC for the new buying committee.",
-      steps:[{n:"Step 1",t:"Adjacent BU mapping"},{n:"Step 2",t:"Champion-led intro event"},{n:"Step 3",t:"In-product signal → 1:1 play"},{n:"Step 4",t:"EBC for new buying committee"}]},
-    cards:[
-      {h:"Sales (AE)",i:"ti-user-check",action:"Expansion opportunity discovery, multi-thread to new buyers, bundle / package upsell",abx:"Built adjacent BU map, supplied new persona briefs"},
-      {h:"Lifecycle / in-app",i:"ti-message",action:"Identify and act on in-product expand signals. Put together 1:1 play to showcase the capabilities of the next, most likely product addition",abx:"ABX supports — content development, 1:1 play coordination, signal-to-action routing"},
-      {h:"Community",i:"ti-users-group",action:"Internal champion network, cross-BU user group at customer HQ",abx:"Brokered the cross-BU introductions inside the customer"},
-      {h:"Growth & digital",i:"ti-device-desktop",action:"Persona-specific ads to new teams, StatSig + Amplitude cross-sell campaign",abx:"Defined new persona targets, sequenced cross-sell messaging"},
-      {h:"Events (field, partner, corporate)",i:"ti-building",action:"Customer-specific EBC for new buying committee (Corporate Events owns in partnership with Sales), partner-led intro to adjacent BU",abx:"ABX coordinates: invite list, agenda direction, exec lineup for new BU"}
-    ]}
+  {num:"Pre-S0",name:"Awareness + MQL",play:"Coordinated awareness across 118 accounts, signal-routed within 24 hours",teams:[
+    {n:"Sales",i:"ti-user-check"},{n:"SDR",i:"ti-search"},{n:"Growth & digital",i:"ti-device-desktop"},
+    {n:"Events",i:"ti-calendar-event"},{n:"Community",i:"ti-users-group"},{n:"Campaigns & PMM",i:"ti-speakerphone"},
+    {n:"Lifecycle",i:"ti-mail-fast"},{n:"Wildcard",i:"ti-gift",o:1},{n:"Connex / Ortus",i:"ti-tools-kitchen-2",o:1},
+    {n:"Landing pages",i:"ti-browser",o:1},{n:"Personalized content",i:"ti-file-text",o:1}
+  ]},
+  {num:"S0",name:"Engagement",play:"Personalized landing page updated from discovery, exec sequence fires, EBC queued for S4",teams:[
+    {n:"Sales",i:"ti-user-check"},{n:"SDR",i:"ti-users"},{n:"SE",i:"ti-tools"},
+    {n:"Lifecycle / in-app",i:"ti-message",o:1},{n:"Events",i:"ti-calendar-event"}
+  ]},
+  {num:"S1",name:"Discovery",play:"Pressure-test the champion, connect to peer Amplifier, ads on buying committee",teams:[
+    {n:"Sales (AE+SE)",i:"ti-user-check"},{n:"Growth & digital",i:"ti-device-desktop"},
+    {n:"Community",i:"ti-users-group"},{n:"Events",i:"ti-calendar-event"}
+  ]},
+  {num:"S2",name:"Qualification",play:"Big-bet surround — VC value POV, leave-behind 1-pager, exec video, ReachDesk gift, lunch & learn planning, ads, peer ref",teams:[
+    {n:"Sales (AE+SE)",i:"ti-user-check"},{n:"Value Consultants",i:"ti-chart-arcs"},
+    {n:"Growth & digital",i:"ti-device-desktop"},{n:"Lifecycle / in-app",i:"ti-message",o:1},
+    {n:"Events",i:"ti-building"},{n:"Community",i:"ti-users-group"},
+    {n:"1:1 motion planning",i:"ti-presentation",o:1},{n:"ReachDesk",i:"ti-gift",o:1}
+  ]},
+  {num:"S3",name:"Business & Tech Eval",play:"Lunch & learn at their office, VC-led value engineering, technical deep-dive, EBC invite sent for S4",teams:[
+    {n:"Sales (AE+SE)",i:"ti-user-check"},{n:"Value Consultants",i:"ti-chart-arcs"},
+    {n:"Community",i:"ti-users-group"},{n:"Events",i:"ti-calendar-event"},
+    {n:"1:1 motion",i:"ti-presentation",o:1}
+  ]},
+  {num:"S4",name:"Proof of Value",play:"EBC at SF HQ with VC-led value POV — Corporate Events owns, ABX coordinates. EB commits to MAP",teams:[
+    {n:"Sales (AE+SE)",i:"ti-user-check"},{n:"Value Consultants",i:"ti-chart-arcs"},
+    {n:"Exec team",i:"ti-crown"},{n:"Growth & digital",i:"ti-device-desktop"},
+    {n:"Community",i:"ti-users-group"},{n:"Events (EBC)",i:"ti-building"}
+  ]},
+  {num:"S5",name:"Proposal",play:"VC ROI articulation, vendor of choice confirmed, champion and EB review proposal",teams:[
+    {n:"Sales (AE+SE)",i:"ti-user-check"},{n:"Value Consultants",i:"ti-chart-arcs"},
+    {n:"Exec team",i:"ti-crown"},{n:"Community",i:"ti-users-group"}
+  ]},
+  {num:"S6",name:"Negotiation",play:"Agreement signed, MSA executed, implementation plan finalized",teams:[
+    {n:"Sales (AE+SE)",i:"ti-user-check"},{n:"Exec team",i:"ti-crown"}
+  ]},
+  {num:"S7",name:"Closed Won",play:"Direct mail gift to champion, clean CS handoff, kickoff scheduled",teams:[
+    {n:"Sales (AE+SE)",i:"ti-user-check"},{n:"CSM",i:"ti-headset"},{n:"SE",i:"ti-tools"},
+    {n:"Community",i:"ti-users-group"},{n:"Lifecycle / in-app",i:"ti-message"},
+    {n:"Direct mail gift",i:"ti-gift",o:1}
+  ]},
+  {num:"Post-sale",name:"Adopt",play:"QBR prep, exec check-ins, reactivate within 7 days if Risk Tier dips",teams:[
+    {n:"CSM",i:"ti-headset"},{n:"Customer education",i:"ti-school"},
+    {n:"Lifecycle / in-app",i:"ti-message"},{n:"Community",i:"ti-users-group"},
+    {n:"Reactivation play",i:"ti-refresh",o:1}
+  ]},
+  {num:"Post-sale",name:"Advocate",play:"ABX-only advocate event, exec summit speakers, case studies, ads with their logo",teams:[
+    {n:"Community",i:"ti-users-group"},{n:"Events",i:"ti-microphone"},
+    {n:"Growth & digital",i:"ti-device-desktop"},{n:"Campaigns & PMM",i:"ti-speakerphone"},
+    {n:"Lifecycle / in-app",i:"ti-message"},{n:"Advocate event",i:"ti-star",o:1}
+  ]},
+  {num:"Post-sale",name:"Expand",play:"Adjacent BU mapping, in-product signal → 1:1 play, StatSig cross-sell, new EBC",teams:[
+    {n:"Sales (AE)",i:"ti-user-check"},{n:"Lifecycle / in-app",i:"ti-message"},
+    {n:"Community",i:"ti-users-group"},{n:"Growth & digital",i:"ti-device-desktop"},
+    {n:"Events (EBC)",i:"ti-building"}
+  ]}
 ];
 
-const rail = document.getElementById('j-rail');
-const titleEl = document.getElementById('j-title');
-const stageEl = document.getElementById('j-stage');
-const subEl = document.getElementById('j-sub');
-const playEl = document.getElementById('j-play');
-const gridEl = document.getElementById('j-grid');
-const prev = document.getElementById('j-prev');
-const next = document.getElementById('j-next');
-let idx = 0;
-
-stages.forEach((s, i) => {
-  const b = document.createElement('button');
-  b.className = 'j-pill';
-  b.type = 'button';
-  b.innerHTML = `<span class="stg">${s.stage.split(' · ')[0]}</span>${s.key}`;
-  b.addEventListener('click', () => { idx = i; render(); });
-  rail.appendChild(b);
-});
-
-function render() {
-  const s = stages[idx];
-  rail.querySelectorAll('.j-pill').forEach((p, i) => p.classList.toggle('active', i === idx));
-  stageEl.textContent = s.stage;
-  titleEl.textContent = s.title;
-  subEl.textContent = s.sub;
-  playEl.innerHTML = `<h4><i class="ti ti-flag"></i>The ABX-designed play</h4><p class="j-play-lede">${s.play.lede}</p><div class="j-steps">${s.play.steps.map(st => `<div class="j-step"><div class="n">${st.n}</div><div class="t">${st.t}</div></div>`).join('')}</div>`;
-  gridEl.innerHTML = s.cards.map(c => `<div class="j-card"><h4><i class="ti ${c.i}"></i>${c.h}</h4><p class="j-action">${c.action}</p><div class="j-abx"><i class="ti ti-flag"></i><span><strong>ABX:</strong> ${c.abx}</span></div></div>`).join('');
-  prev.disabled = idx === 0;
-  next.disabled = idx === stages.length - 1;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function step(d) { idx = Math.max(0, Math.min(stages.length - 1, idx + d)); render(); }
-
-prev.addEventListener('click', () => step(-1));
-next.addEventListener('click', () => step(1));
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowLeft' && !prev.disabled) step(-1);
-  if (e.key === 'ArrowRight' && !next.disabled) step(1);
-});
-
-render();
+const sweep = document.getElementById('sweep');
+sweep.innerHTML = stages.map(s => `
+  <div class="stage">
+    <div class="stage-head">
+      <p class="stage-num">${s.num}</p>
+      <h3 class="stage-name">${s.name}</h3>
+    </div>
+    <div class="play-line">
+      <p class="label"><i class="ti ti-flag"></i>ABX play</p>
+      <p class="text">${s.play}</p>
+    </div>
+    <ul class="teams">
+      ${s.teams.map(t => `<li class="team${t.o ? ' owned' : ''}"><i class="ti ${t.i}"></i><span class="name">${t.n}</span></li>`).join('')}
+    </ul>
+  </div>
+`).join('');
 </script>
 </body>
 </html>
